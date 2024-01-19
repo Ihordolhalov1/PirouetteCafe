@@ -19,9 +19,9 @@ struct ProductCell: View {
                 Text(String(product.price) + "€").bold()
             }.padding(.horizontal, 4)
             
-        }.frame(width: screen.width * 0.45, height: screen.width * 0.45, alignment: .leading)
+        }.frame(width: screen.width * 0.45, height: screen.width * 0.5, alignment: .leading)
             .background(.white)
-            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 0)))
+            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 5, height: 0)))
             .shadow(radius: 10)
 
        
