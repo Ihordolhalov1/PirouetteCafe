@@ -19,7 +19,8 @@ struct CatalogView: View {
                         ForEach(CatalogViewModel.shared.products, id: \.id) {
                             item in
                             NavigationLink {
-                                ProductDetailedView(product: item)
+                                let viewModel = ProductDetailViewModel(product: item)
+                                ProductDetailedView(viewModel: viewModel)
                             } label: {
                                 ProductCell(product: item)
                                     .foregroundStyle(.black)
@@ -38,7 +39,8 @@ struct CatalogView: View {
                             item in
                             
                             NavigationLink {
-                                ProductDetailedView(product: item)
+                                let viewModel = ProductDetailViewModel(product: item)
+                                ProductDetailedView(viewModel: viewModel)
                             } label: {
                                 ProductCell(product: item)
                                     .foregroundStyle(.black)
