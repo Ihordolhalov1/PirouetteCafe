@@ -12,6 +12,8 @@ struct ProductDetailedView: View {
     @State var size = "Small"
     @State var count = 1
     
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
         VStack(alignment: .leading){
             Image("pizza").resizable().scaledToFit()
@@ -50,7 +52,11 @@ struct ProductDetailedView: View {
 
         
         Button("Add to cart") {
-            print("Add to cart")
+            
+            let position = Position(id: UUID().uuidString, product: viewModel.product, count: self.count)
+            CartViewModel.shared.addPosition(position: position)
+            presentationMode.wrappedValue.dismiss()
+            
         }
             .padding()
             .frame(maxWidth: .infinity)

@@ -22,6 +22,7 @@
 		5D4E07A32B5AC89200C9A8EB /* ProductDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4E07A22B5AC89200C9A8EB /* ProductDetailViewModel.swift */; };
 		5DC9B6342B5D7E8A00A29964 /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9B6332B5D7E8A00A29964 /* CartViewModel.swift */; };
 		5DC9B6362B5D838000A29964 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9B6352B5D838000A29964 /* Position.swift */; };
+		5DC9B6382B5DAB5700A29964 /* PositionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9B6372B5DAB5700A29964 /* PositionCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		5D4E07A22B5AC89200C9A8EB /* ProductDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewModel.swift; sourceTree = "<group>"; };
 		5DC9B6332B5D7E8A00A29964 /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		5DC9B6352B5D838000A29964 /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
+		5DC9B6372B5DAB5700A29964 /* PositionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				5D4E07992B5976DC00C9A8EB /* ProductCell.swift */,
+				5DC9B6372B5DAB5700A29964 /* PositionCell.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -208,6 +211,7 @@
 				5D4E078F2B59697900C9A8EB /* MainTabBar.swift in Sources */,
 				5D4E07812B55847E00C9A8EB /* AuthView.swift in Sources */,
 				5D4E07912B596DC800C9A8EB /* CatalogView.swift in Sources */,
+				5DC9B6382B5DAB5700A29964 /* PositionCell.swift in Sources */,
 				5D4E07A32B5AC89200C9A8EB /* ProductDetailViewModel.swift in Sources */,
 				5DC9B6362B5D838000A29964 /* Position.swift in Sources */,
 				5D4E07952B596E1B00C9A8EB /* ProfileView.swift in Sources */,

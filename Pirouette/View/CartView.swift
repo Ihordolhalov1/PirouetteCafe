@@ -8,13 +8,52 @@
 import SwiftUI
 
 struct CartView: View {
-    var viewModel: CartViewModel
+    @StateObject var viewModel: CartViewModel
     
     var body: some View {
-        Text("Cart")
+        VStack {
+            List(viewModel.positions) { position in
+                PositionCell(position: position)
+            }.listStyle(.plain)
+                .navigationTitle("Cart")
+            
+            HStack{
+                Text("Total: ").fontWeight(.bold)
+                Spacer()
+                Text((String(format: "%.2f", self.viewModel.cost) + "€")).fontWeight(.bold)
+            }.padding()
+            
+            HStack(spacing: 25) {
+                Button(action: {}, label: {
+                    Text("Clear")
+                }).padding()
+                    .frame(maxWidth: .infinity)
+                    .background(.red)
+                    .cornerRadius(12)
+                    .padding(8)
+                    .font(.title3.bold())
+                    .foregroundColor(.white)
+                
+                Spacer()
+                
+                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                    Text("Accept")
+                })
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(LinearGradient(colors: [.yellow, .orange], startPoint: .leading, endPoint: .trailing))
+                    .cornerRadius(12)
+                    .padding(8)
+                    .font(.title3.bold())
+                    .foregroundColor(.black)
+                    
+            }.padding()
+            
+            
+        }
     }
 }
 
 #Preview {
-    CartView(viewModel: CartViewModel())
+    CartView(viewModel: CartViewModel.shared)
 }
