@@ -53,7 +53,8 @@ struct ProductDetailedView: View {
         
         Button("Add to cart") {
             
-            let position = Position(id: UUID().uuidString, product: viewModel.product, count: self.count)
+            var position = Position(id: UUID().uuidString, product: viewModel.product, count: self.count)
+            position.product.price = viewModel.getPrice(size: size) //міняємо ціну на ту, яка є відповідно до розміру піци
             CartViewModel.shared.addPosition(position: position)
             presentationMode.wrappedValue.dismiss()
             
