@@ -12,9 +12,10 @@ struct AuthView: View {
     @State private var email = ""
     @State private var password = ""
     @State private var repeatPassword = ""
-    @State  private var isAuth = true
-    @State  private var isTabViewShow = false
-    
+    @State private var isAuth = true
+    @State private var isTabViewShow = false
+    @State private var isShowAlert = false
+    @State private var alertMessage = ""
     
     var body: some View {
         VStack {
@@ -42,9 +43,42 @@ struct AuthView: View {
                 Button(action: {
                     if isAuth {
                         print("Login button pressed")
-                        isTabViewShow.toggle()
+                        
+                        AuthService.shared.signIn(email: self.email, password: self.password) { result in
+                            switch result {
+                            case .success(_):
+                                isTabViewShow.toggle()
+
+                            case .failure(let error):
+                                alertMessage = "Error of authorisation: \(error.localizedDescription)"
+                            }
+                        }
                     } else {
                         print("Sign up button pressed")
+                        
+                        guard password == repeatPassword else {
+                            self.alertMessage = "Passwords are not equal"
+                            self.isShowAlert.toggle()
+                            return
+                        }
+                        AuthService.shared.signUp(email: self.email, password: self.password) { result in
+                            switch result {
+                            case .success(_):
+                                alertMessage = "Registration successful"
+                                self.isShowAlert.toggle()
+                                self.email = ""
+                                self.password = ""
+                                self.repeatPassword = ""
+                                self.isAuth.toggle()
+                                   
+                            case .failure(let error):
+                                alertMessage = "Registration failure \(error.localizedDescription)"
+                                self.isShowAlert.toggle()
+
+                            }
+                        }
+                        
+                       
                     }
                 }, label: {
                     Text(isAuth ? "Log In" : "Sign Up")
@@ -82,7 +116,11 @@ struct AuthView: View {
                     .font(.title3.bold())
                 .foregroundColor(.black)
                 }.padding(.top, 100)
-          
+                .alert(alertMessage, isPresented: $isShowAlert) {
+                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                        Text("Ok")
+                    })
+                }
 
             
             
@@ -93,7 +131,9 @@ struct AuthView: View {
         .padding()
         .animation(.easeInOut(duration: 0.3), value: isAuth)
         .fullScreenCover(isPresented: $isTabViewShow, content: {
-            MainTabBar()
+            
+            let mainTabBarViewModel = MainTabBarViewModel(user: AuthService.shared.currentUser!)
+            MainTabBar(viewModel: mainTabBarViewModel)
         })
     }
 }
