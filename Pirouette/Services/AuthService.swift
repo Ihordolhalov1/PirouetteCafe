@@ -27,7 +27,7 @@ class AuthService {
         auth.createUser(withEmail: email, password: password) { result, error in
             if let result = result {
                 let mwUser = MVUser(id: result.user.uid, name: "Name", phone: 1234567, address: "Address")
-                DatabaseService.shared.setUser(user: mwUser) { resultDB in
+                DatabaseService.shared.setProfile(user: mwUser) { resultDB in
                     switch resultDB {
                     case .success(_):
                         completion(.success(result.user))

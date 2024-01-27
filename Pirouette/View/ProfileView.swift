@@ -11,6 +11,10 @@ struct ProfileView: View {
     @State var isAvaAlertPresented = false
     @State var isQuitAlertPresented = false
     @State var isAuthViewPresented = false
+    
+    @StateObject var viewModel: ProfileViewModel
+
+
 
     
     var body: some View {
@@ -33,12 +37,16 @@ struct ProfileView: View {
                             
                         }
                     VStack(alignment: .leading) {
-                        Text("Person name").bold().font(.title2)
-                        Text("+380671111111")
+                        TextField("Name: ", text: $viewModel.profile.name).bold().font(.title2)
+                        HStack {
+                            Text("+38")
+                            TextField("Phone number", value: $viewModel.profile.phone, format: IntegerFormatStyle.number)
+
+                        }
                     }
                 }.padding(.vertical)
                 Text("Delivery address:").bold()
-                Text("Address")
+                TextField("Address", text: $viewModel.profile.address)
                 
                 // Таблица с заказами
                 List {
@@ -75,10 +83,17 @@ struct ProfileView: View {
                 .fullScreenCover(isPresented: $isAuthViewPresented, content: {
                     AuthView()
                 })
+                .onSubmit {
+                    print("On submit")
+                    viewModel.setProfile()
+                }
+                .onAppear {
+                    self.viewModel.getProfile()
+                }
         }
     }
 //}
 
 #Preview {
-    ProfileView()
+    ProfileView(viewModel: ProfileViewModel(profile: MVUser(id: "1", name: "Name", phone: 0672351537, address: "Address")))
 }
