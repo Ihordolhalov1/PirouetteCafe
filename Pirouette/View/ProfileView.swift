@@ -49,10 +49,15 @@ struct ProfileView: View {
                 TextField("Address", text: $viewModel.profile.address)
                 
                 // Таблица с заказами
+                
                 List {
-                 Text ("Order 1")
-                 Text ("Order 2")
-                 Text ("Order 3")
+                    if viewModel.orders.count == 0 {
+                        Text ("Here will be your orders")
+                    } else {
+                        ForEach(viewModel.orders, id: \.id) { order in
+                            OrderCell(order: order)
+                        }
+                    }
                  }.listStyle(.plain)
                 
                  Button(action: {
@@ -89,6 +94,7 @@ struct ProfileView: View {
                 }
                 .onAppear {
                     self.viewModel.getProfile()
+                    self.viewModel.getOrders()
                 }
         }
     }

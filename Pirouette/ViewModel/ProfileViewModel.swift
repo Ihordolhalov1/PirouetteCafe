@@ -11,9 +11,23 @@ import FirebaseStorage
 class ProfileViewModel: ObservableObject {
     
     @Published var profile: MVUser
+    @Published var orders: [Order] = [Order]()
     
     init(profile: MVUser) {
         self.profile = profile
+    }
+    
+    func getOrders() {
+        DatabaseService.shared.getOrders(by: AuthService.shared.currentUser!.accessibilityHint) { result in
+            
+            switch result {
+            case .success (let orders):
+                self.orders = orders
+                print( "Total amount of orders: \(orders.count)")
+            case .failure (let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     func setProfile() {
