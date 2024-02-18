@@ -15,7 +15,7 @@ struct CatalogView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             
-            Section("Popular") {
+            Section("Recommended") {
                 ScrollView(.vertical, showsIndicators: false) {
                     LazyVGrid(columns: layout) {
                         ForEach(CatalogViewModel.shared.products, id: \.id) {
@@ -34,10 +34,10 @@ struct CatalogView: View {
             }
             
             
-            Section("Pizzas") {
+            Section("Delishious") {
                 ScrollView(.vertical, showsIndicators: false) {
                     LazyVGrid(columns: layout) {
-                        ForEach(viewModel.pizzas, id: \.id) {
+                        ForEach(viewModel.delishious, id: \.id) {
                             item in
                             
                             NavigationLink {
@@ -56,7 +56,7 @@ struct CatalogView: View {
             .onAppear {
                 print("Get data from Firebase")
                  self.viewModel.getProducts()
-                print(viewModel.pizzas)
+                print(viewModel.delishious)
             }
     }
 }

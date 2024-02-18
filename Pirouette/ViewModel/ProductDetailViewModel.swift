@@ -12,7 +12,7 @@ class ProductDetailViewModel: ObservableObject {
     
     @Published var product: Product
     @Published var sizes = ["Small", "Medium", "Ladge"]
-    @Published var image = UIImage(named: "pizza")!
+    @Published var image = UIImage(systemName: "takeoutbag.and.cup.and.straw")!
     
     init(product: Product) {
         self.product = product
