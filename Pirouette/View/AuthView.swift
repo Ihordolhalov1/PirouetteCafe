@@ -131,9 +131,14 @@ struct AuthView: View {
         .padding()
         .animation(.easeInOut(duration: 0.3), value: isAuth)
         .fullScreenCover(isPresented: $isTabViewShow, content: {
+            if AuthService.shared.currentUser?.uid == adminID {
+                AdminOrderView()
+
+            } else {
+                let mainTabBarViewModel = MainTabBarViewModel(user: AuthService.shared.currentUser!)
+                MainTabBar(viewModel: mainTabBarViewModel)
+            }
             
-            let mainTabBarViewModel = MainTabBarViewModel(user: AuthService.shared.currentUser!)
-            MainTabBar(viewModel: mainTabBarViewModel)
         })
     }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProductDetailedView: View {
-    var viewModel: ProductDetailViewModel
+    @State var viewModel: ProductDetailViewModel
     @State var size = "Small"
     @State var count = 1
     
@@ -16,7 +16,8 @@ struct ProductDetailedView: View {
     
     var body: some View {
         VStack(alignment: .leading){
-            Image("pizza").resizable().scaledToFit()
+            Image(uiImage: viewModel.image).resizable().scaledToFit()
+                
             
             HStack{
                 Text(viewModel.product.title).font(.title2.bold())
@@ -48,7 +49,8 @@ struct ProductDetailedView: View {
             
             
           
-            }
+        
+        }
 
         
         Button("Add to cart") {
@@ -66,6 +68,7 @@ struct ProductDetailedView: View {
             .padding(8)
             .font(.title3.bold())
             .foregroundColor(.black)
+           
      Spacer()
         
     
@@ -76,5 +79,5 @@ struct ProductDetailedView: View {
 }
 
 #Preview {
-    ProductDetailedView(viewModel: ProductDetailViewModel(product: Product(id: "1", title: "Title1", imageUrl: "NoUrl", price: 11.1, descript: "Descr1")))
+    ProductDetailedView(viewModel: ProductDetailViewModel(product: Product(id: "1", title: "Title1", price: 11.1, descript: "Descr1")))
 }

@@ -10,6 +10,8 @@ import SwiftUI
 struct CatalogView: View {
     
     let layout = [GridItem(.adaptive(minimum: screen.width / 3))]
+    @StateObject var viewModel = CatalogViewModel()
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             
@@ -35,7 +37,7 @@ struct CatalogView: View {
             Section("Pizzas") {
                 ScrollView(.vertical, showsIndicators: false) {
                     LazyVGrid(columns: layout) {
-                        ForEach(CatalogViewModel.shared.pizzas, id: \.id) {
+                        ForEach(viewModel.pizzas, id: \.id) {
                             item in
                             
                             NavigationLink {
@@ -51,6 +53,11 @@ struct CatalogView: View {
             }
             
         }.navigationTitle("Catalog")
+            .onAppear {
+                print("Get data from Firebase")
+                 self.viewModel.getProducts()
+                print(viewModel.pizzas)
+            }
     }
 }
 

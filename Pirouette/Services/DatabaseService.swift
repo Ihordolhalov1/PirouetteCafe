@@ -20,9 +20,32 @@ class DatabaseService {
         return db.collection("orders")
     }
     
+    private var productsRef: CollectionReference {
+        return db.collection("products")
+    }
+    
     private init() {
         
     }
+    
+    func getPositions(by orderID: String, completion: @escaping (Result<[Position], Error>) -> ()) {
+        let positionsRef = ordersRef.document(orderID).collection("positions")
+        positionsRef.getDocuments { qSnap, error in
+            if let querySnapshot = qSnap {
+                var positions = [Position]()
+                for doc in querySnapshot.documents {
+                    if let position = Position(doc:doc) {
+                        positions.append(position)
+                    }
+                }
+                
+                completion(.success(positions))
+            } else if let error = error {
+                completion(.failure(error))
+            }
+        }
+    }
+    
     
     func getOrders(by userID: String?, completion: @escaping (Result<[Order], Error>) -> ()) {
         self.ordersRef.getDocuments { qSnap, error in
@@ -93,8 +116,8 @@ class DatabaseService {
     }
     
     
-    func getProfile(completion: @escaping (Result<MVUser, Error>) -> ()) {
-        usersRef.document(AuthService.shared.currentUser!.uid).getDocument { docSnapshot, error in
+    func getProfile(by userID:String? = nil, completion: @escaping (Result<MVUser, Error>) -> ()) {
+        usersRef.document(userID != nil ? userID! : AuthService.shared.currentUser!.uid).getDocument { docSnapshot, error in
             guard let snap = docSnapshot else { return }
             guard let data = snap.data() else { return }
             
@@ -106,6 +129,31 @@ class DatabaseService {
             let user = MVUser(id: id, name: userName, phone: phone, address: address)
             completion(.success(user))
         }
+    }
+    
+    
+    
+    func getProducts (completion: @escaping (Result<[Product], Error>) -> ()) {
+        self.productsRef.getDocuments { qSnap, error in
+            guard let qSnap = qSnap else {
+                if let error = error{
+                    print("ПОМИЛКА ОТРИМАННЯ НА DatabaseService.getProducts")
+                    completion(.failure (error)) }
+                return
+            }
+            let docs = qSnap.documents
+            var products = [Product]()
+            
+            for doc in docs {
+                guard let product = Product(doc: doc) else { 
+                    print("ПОМИЛКА ОТРИМАННЯ НА DatabaseService.getProducts2")
+                    print()
+                    return }
+            products.append(product)
+            }
+            print("УСПЕШНО НА DatabaseService.getProducts")
+            completion(.success(products))
+            }
     }
     
     

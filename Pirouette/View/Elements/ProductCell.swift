@@ -9,9 +9,11 @@ import SwiftUI
 
 struct ProductCell: View {
     var product: Product
+    @State var uiImage = UIImage(named: "pizza")
+    
     var body: some View {
         VStack {
-            Image("pizza").resizable().scaledToFit()
+            Image(uiImage: uiImage!).resizable().scaledToFit()
             
             HStack {
                 Text(product.title)
@@ -23,12 +25,23 @@ struct ProductCell: View {
             .background(.white)
             .clipShape(RoundedRectangle(cornerSize: CGSize(width: 5, height: 0)))
             .shadow(radius: 10)
-
+            .onAppear {
+                print(screen.width, screen.height)
+                StorageService.shared.downloadProductImage(id: self.product.id) { result in
+                    switch result {
+                        
+                    case .success(let data):
+                        self.uiImage = UIImage(data: data)
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+            }
        
 
     }
 }
 
 #Preview {
-    ProductCell(product: Product(id: "1", title: "Title1 Title1", imageUrl: "Url1", price: 10.1, descript: "Description 1"))
+    ProductCell(product: Product(id: "1", title: "Title1 Title1", price: 10.1, descript: "Description 1"))
 }

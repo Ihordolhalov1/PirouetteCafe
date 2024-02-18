@@ -33,8 +33,11 @@ struct PirouetteApp: App {
         WindowGroup {
             
             if let user = AuthService.shared.currentUser {
-                let viewModel = MainTabBarViewModel(user: user)
-                MainTabBar(viewModel: viewModel)
+                if user.uid == adminID {
+                    AdminOrderView()
+                } else {
+                    let viewModel = MainTabBarViewModel(user: user)
+                    MainTabBar(viewModel: viewModel) }
             } else {
                 AuthView()
             }

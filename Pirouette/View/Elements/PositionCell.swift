@@ -24,5 +24,5 @@ struct PositionCell: View {
 }
 
 #Preview {
-    PositionCell(position: Position(id: UUID().uuidString, product: Product(id: UUID().uuidString, title: "Title1 ", imageUrl: "None", price: 5.10, descript: "Title 1 Disc"), count: 5))
+    PositionCell(position: Position(id: UUID().uuidString, product: Product(id: UUID().uuidString, title: "Title1 ", price: 5.10, descript: "Title 1 Disc"), count: 5))
 }
