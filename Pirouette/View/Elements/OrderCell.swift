@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct OrderCell: View {
-    var order: Order
     
+    var order: Order
+
     var body: some View {
         HStack {
-            Text("\(order.date)")
-            Text("\(order.cost)").bold().frame(width: 100)
+            Text(dateToString(date: order.date))
+            Text(stringPrice(price: order.cost)).bold().frame(width: 100)
             Text("\(order.status)").frame(width: 120).foregroundColor(.green)
         }
     }

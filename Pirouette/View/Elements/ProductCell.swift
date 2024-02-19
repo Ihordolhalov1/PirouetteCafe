@@ -18,7 +18,7 @@ struct ProductCell: View {
             HStack {
                 Text(product.title)
                 Spacer()
-                Text(String(product.price) + "€").bold()
+                Text(stringPrice(price: product.price)).bold()
             }.padding(.horizontal, 4)
             
         }.frame(width: screen.width * 0.45, height: screen.width * 0.5, alignment: .leading)

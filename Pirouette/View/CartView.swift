@@ -30,7 +30,7 @@ struct CartView: View {
             HStack{
                 Text("Total: ").fontWeight(.bold)
                 Spacer()
-                Text((String(format: "%.2f", self.viewModel.cost) + "€")).fontWeight(.bold)
+                Text(stringPrice(price:self.viewModel.cost)).fontWeight(.bold)
             }.padding()
             
             HStack(spacing: 25) {
@@ -60,15 +60,16 @@ struct CartView: View {
                     
                     
                 }, label: {
-                    Text("Accept")
+                    CustomButton(text: "Accept", opacity: 1.0)
+                //    Text("Accept")
                 })
-                    .padding()
+                 /*   .padding()
                     .frame(maxWidth: .infinity)
                     .background(LinearGradient(colors: [.yellow, .orange], startPoint: .leading, endPoint: .trailing))
                     .cornerRadius(12)
                     .padding(8)
                     .font(.title3.bold())
-                    .foregroundColor(.black)
+                    .foregroundColor(.black) */
                     
             }.padding()
             

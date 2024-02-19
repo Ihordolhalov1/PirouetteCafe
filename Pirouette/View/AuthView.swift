@@ -81,15 +81,8 @@ struct AuthView: View {
                        
                     }
                 }, label: {
-                    Text(isAuth ? "Log In" : "Sign Up")
+                    CustomButton(text: isAuth ? "Log In" : "Sign Up", opacity: 1.0)
                 })
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(LinearGradient(colors: [.yellow, .orange], startPoint: .leading, endPoint: .trailing))
-                .cornerRadius(12)
-                .padding(8)
-                .font(.title3.bold())
-                .foregroundColor(.black)
                 
                 if isAuth {
                     Text("Forgot password?")
@@ -105,16 +98,8 @@ struct AuthView: View {
                     Button(action: {
                         isAuth.toggle()
                     }, label: {
-                        Text(isAuth ? "Sign Up" : "Log In")
+                        CustomButton (text: isAuth ? "Sign Up" : "Log In", opacity: 0.6)
                     })
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(LinearGradient(colors: [.white, .orange], startPoint: .leading, endPoint: .trailing))
-                    .opacity(0.6)
-                    .cornerRadius(12)
-                    .padding(8)
-                    .font(.title3.bold())
-                .foregroundColor(.black)
                 }.padding(.top, 100)
                 .alert(alertMessage, isPresented: $isShowAlert) {
                     Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {

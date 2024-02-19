@@ -16,7 +16,7 @@ struct PositionCell: View {
                 .fontWeight(.bold)
             Spacer()
             Text("\(position.count) pcs")
-            Text(String(format: "%.2f", position.cost) + "€")
+            Text(stringPrice(price:position.cost))
             
         }.padding(.horizontal)
         

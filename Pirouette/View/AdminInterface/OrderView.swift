@@ -44,7 +44,8 @@ struct OrderView: View {
                     PositionCell(position: position)
                 }
             }
-            Text("Total: \(viewModel.order.cost) €").bold()
+            Text(stringPrice(price:viewModel.order.cost)).bold()
+            
         }.padding()
             .onAppear {
                 viewModel.getUserData()
