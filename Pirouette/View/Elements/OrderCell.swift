@@ -20,6 +20,6 @@ struct OrderCell: View {
     }
 }
 
-#Preview {
-    OrderCell(order: Order(userID: "UserIS", date: Date(), status: "Status"))
-}
+/*#Preview {
+    OrderCell(order: Order(userID: "UserIS", date: Date(), status: "Status", address: "Address", dateToGet: Date()))
+}*/

@@ -9,7 +9,7 @@ import Foundation
 struct MVUser: Identifiable {
     var id: String
     var name: String
-    var phone: Int //переделать
+    var phone: String
     var address: String
     
     

@@ -26,7 +26,7 @@ class AuthService {
     func signUp(email: String, password: String, completion: @escaping (Result<User, Error>) -> ()) {
         auth.createUser(withEmail: email, password: password) { result, error in
             if let result = result {
-                let mwUser = MVUser(id: result.user.uid, name: "Name", phone: 1234567, address: "Address")
+                let mwUser = MVUser(id: result.user.uid, name: "Name", phone: "", address: "Address")
                 DatabaseService.shared.setProfile(user: mwUser) { resultDB in
                     switch resultDB {
                     case .success(_):

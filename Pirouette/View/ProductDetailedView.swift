@@ -11,6 +11,7 @@ struct ProductDetailedView: View {
     @State var viewModel: ProductDetailViewModel
     @State var size = "Small"
     @State var count = 1
+    @State private var isAlertPresented = false
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -22,14 +23,10 @@ struct ProductDetailedView: View {
                     .scaledToFill()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .clipped()
-                //      .padding(.top, 1)
-                //.scaledToFit()
-                //  .frame(width: 500)
                 Spacer()
                 HStack{
                     Text(viewModel.product.title).font(.title2.bold())
                     Spacer()
-                    //        Text("\(viewModel.product.price)" + "€").font(.title2)
                     Text(stringPrice(price:viewModel.getPrice(size: size)) ).font(.title2)
                 }.padding(.horizontal)
                 
@@ -59,33 +56,29 @@ struct ProductDetailedView: View {
                 
                 
             } //.ignoresSafeArea(.all)
+        }.alert(isPresented: $isAlertPresented) {
+            Alert(title: Text(viewModel.product.title), message:
+                Text(" was added to cart")
+            , dismissButton: .default(Text("OK")))
         }
             Spacer()
             
-            Button("Add to cart") {
-                
-                var position = Position(id: UUID().uuidString, product: viewModel.product, count: self.count)
-                position.product.price = viewModel.getPrice(size: size) //міняємо ціну на ту, яка є відповідно до розміру піци
-                CartViewModel.shared.addPosition(position: position)
-                presentationMode.wrappedValue.dismiss()
-                
-            }
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(LinearGradient(colors: [.yellow, .orange], startPoint: .leading, endPoint: .trailing))
-            .cornerRadius(12)
-           // .padding(8)
-            .font(.title3.bold())
-            .foregroundColor(.black)
- //       } .padding(.bottom,10)
+        Button(action: {
+            var position = Position(id: UUID().uuidString, product: viewModel.product, count: self.count)
+            position.product.price = viewModel.getPrice(size: size) //міняємо ціну на ту, яка є відповідно до розміру піци
+            CartViewModel.shared.addPosition(position: position)
+            
+            isAlertPresented.toggle()
+            
+            presentationMode.wrappedValue.dismiss()
+        }, label: {
+            CustomButton (text: "Add to cart", opacity: 1)
+        })
            
-
      Spacer()
         
-    
+    }
         
-        
-        }
    
 }
 

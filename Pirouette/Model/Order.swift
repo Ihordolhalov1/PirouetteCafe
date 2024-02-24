@@ -14,6 +14,9 @@ struct Order {
     var positions = [Position]()
     var date: Date
     var status: String
+    var address: String
+    var dateToGet: Date
+//    var countOfPerson: Int = 1
     
     var cost: Double {
         var sum = 0.0
@@ -30,6 +33,10 @@ struct Order {
         repres["userID"] = userID
         repres["date"] = Timestamp(date: date)
         repres["status"] = status
+        repres["address"] = address
+        repres["dateToGet"] = Timestamp(date: dateToGet)
+   //     repres ["countOfPerson"] = countOfPerson
+        
         return repres
     }
     
@@ -37,12 +44,15 @@ struct Order {
          userID: String,
          positions: [Position] = [Position](),
          date: Date,
-         status: String) {
+         status: String, address: String, dateToGet: Date) {
         self.id = id
         self.userID = userID
         self.positions = positions
         self.date = date
         self.status = status
+        self.address = address
+        self.dateToGet = dateToGet
+    //    self.countOfPerson = countOfPerson
     }
     
     init? (doc: QueryDocumentSnapshot) {
@@ -51,11 +61,17 @@ struct Order {
         guard let userID = data["userID"] as? String else { return nil }
         guard let date = data[ "date"] as? Timestamp else { return nil }
         guard let status = data["status"] as? String else { return nil }
+        guard let address = data["address"] as? String else { return nil }
+        guard let dateToGet = data["dateToGet"] as? Timestamp else { return nil }
+     //   guard let countOfPerson = data["countOfPerson"] as? Int else { return nil }
 
         self.id = id
         self.userID = userID
         self.date = date.dateValue()
         self.status = status
+        self.address = address
+        self.dateToGet = dateToGet.dateValue()
+   //     self.countOfPerson = countOfPerson
     }
     
 }

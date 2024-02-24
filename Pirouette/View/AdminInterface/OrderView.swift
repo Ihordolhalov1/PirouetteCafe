@@ -54,5 +54,5 @@ struct OrderView: View {
 }
 
 #Preview {
-    OrderView(viewModel: OrderViewModel(order: Order(userID: "userID", date: Date(), status: "Status")))
+    OrderView(viewModel: OrderViewModel(order: Order(userID: "userID", date: Date(), status: "Status", address: "Address", dateToGet: Date())))
 }

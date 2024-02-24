@@ -79,6 +79,7 @@ class DatabaseService {
         ordersRef.document(order.id).setData(order.representation) {
             error in
             if let error = error {
+                print(error.localizedDescription)
                 completion(.failure(error))
                 } else {
                     self.setPositions(orderId: order.id, positions: order.positions) { result in
@@ -123,7 +124,7 @@ class DatabaseService {
             
             guard let userName = data["name"] as? String else { return }
             guard let id = data["id"] as? String else { return }
-            guard let phone = data["phone"] as? Int else { return }
+            guard let phone = data["phone"] as? String else { return }
             guard let address = data["address"] as? String else { return }
 
             let user = MVUser(id: id, name: userName, phone: phone, address: address)
