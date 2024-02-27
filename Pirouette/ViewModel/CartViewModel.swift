@@ -12,6 +12,7 @@ class CartViewModel: ObservableObject {
     private init() { }
      
     @Published var positions = [Position]()
+    @Published var countOfPositions = 0
     
     var cost: Double {
         var sum = 0.00

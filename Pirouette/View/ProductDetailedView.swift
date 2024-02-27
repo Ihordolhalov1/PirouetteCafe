@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProductDetailedView: View {
     @State var viewModel: ProductDetailViewModel
+
     @State var size = "Small"
     @State var count = 1
     @State private var isAlertPresented = false
@@ -55,7 +56,7 @@ struct ProductDetailedView: View {
                 
                 
                 
-            } //.ignoresSafeArea(.all)
+            }
         }.alert(isPresented: $isAlertPresented) {
             Alert(title: Text(viewModel.product.title), message:
                 Text(" was added to cart")
@@ -67,6 +68,7 @@ struct ProductDetailedView: View {
             var position = Position(id: UUID().uuidString, product: viewModel.product, count: self.count)
             position.product.price = viewModel.getPrice(size: size) //міняємо ціну на ту, яка є відповідно до розміру піци
             CartViewModel.shared.addPosition(position: position)
+            CartViewModel.shared.countOfPositions = CartViewModel.shared.positions.count
             
             isAlertPresented.toggle()
             

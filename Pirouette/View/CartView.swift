@@ -10,7 +10,8 @@ import SwiftUI
 
 struct CartView: View {
     @StateObject var viewModel: CartViewModel
-  //  @StateObject var aa: ProfileViewModel
+    @Binding var numberOfDishes: Int
+
     @State private var isAlertPresented = false
     @State private var deliveryPicker = 0
     @State private var countOfPeople = 1
@@ -37,6 +38,15 @@ struct CartView: View {
                         }.tint(.red)
                     }
             }.listStyle(.plain)
+                .onChange(of: viewModel.positions.count) {
+                    
+                    viewModel.countOfPositions = viewModel.positions.count
+                    numberOfDishes = viewModel.countOfPositions
+                }
+                .onAppear() {
+                    numberOfDishes = viewModel.countOfPositions
+
+                }
             
             if viewModel.positions.count > 0 {
                 Picker("Delivery", selection: $deliveryPicker) {
@@ -139,17 +149,12 @@ struct CartView: View {
                         .padding(8)
                         .font(.title3.bold())
                         .foregroundColor(.white)
-                     //   .opacity(areButtonsHidden ? 0 : 1)
                     
                     Spacer()
                     
                     Button(action: {
                             isAlertPresented.toggle()
-                    
-                        
-                        
-                        
-                        
+                       
                         var order = Order(userID: AuthService.shared.currentUser!.uid, date: Date(), status: OrderStatus.new.rawValue, address: address, dateToGet: selectedTime)
                             order.positions = self.viewModel.positions
                    
@@ -189,6 +194,6 @@ struct CartView: View {
     }
 }
 
- #Preview {
-    CartView(viewModel: CartViewModel.shared)
+  #Preview {
+     CartView(viewModel: CartViewModel.shared, numberOfDishes:  .constant(0))
 }

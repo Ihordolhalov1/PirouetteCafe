@@ -11,10 +11,11 @@ struct CatalogView: View {
     
     let layout = [GridItem(.adaptive(minimum: screen.width / 3))]
     @StateObject var viewModel = CatalogViewModel()
+
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            
+
             Section("Recommended") {
                 ScrollView(.vertical, showsIndicators: false) {
                     LazyVGrid(columns: layout) {
