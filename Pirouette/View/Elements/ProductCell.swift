@@ -43,5 +43,5 @@ struct ProductCell: View {
 }
 
 #Preview {
-    ProductCell(product: Product(id: "1", title: "Title1 Title1", price: 10.1, descript: "Description 1"))
+    ProductCell(product: Product(id: "1", title: "Title1 Title1", price: 10.1, descript: "Description 1", isRecommended: false, isStarters: false, isMainDishes: false, isDesserts: false))
 }

@@ -24,7 +24,14 @@ class CartViewModel: ObservableObject {
     
     
     func addPosition (position: Position) {
-        self.positions.append(position)
+        if let existingPositionIndex = positions.firstIndex(where: { $0.product.id == position.product.id }) {
+                // Позиция уже существует в корзине, поэтому увеличиваем количество
+            
+                positions[existingPositionIndex].count += position.count
+            } else {
+                // Позиция новая, добавляем её в корзину
+                positions.append(position)
+            }
     }
     
 }

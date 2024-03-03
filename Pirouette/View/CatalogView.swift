@@ -16,10 +16,10 @@ struct CatalogView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
 
-            Section("Recommended") {
+            Section("Recommended by Chef") {
                 ScrollView(.vertical, showsIndicators: false) {
                     LazyVGrid(columns: layout) {
-                        ForEach(CatalogViewModel.shared.products, id: \.id) {
+                        ForEach(viewModel.recommended, id: \.id) {
                             item in
                             NavigationLink {
                                 let viewModel = ProductDetailViewModel(product: item)
@@ -35,10 +35,10 @@ struct CatalogView: View {
             }
             
             
-            Section("Delishious") {
+            Section("Starters") {
                 ScrollView(.vertical, showsIndicators: false) {
                     LazyVGrid(columns: layout) {
-                        ForEach(viewModel.delishious, id: \.id) {
+                        ForEach(viewModel.starters, id: \.id) {
                             item in
                             
                             NavigationLink {
@@ -53,12 +53,48 @@ struct CatalogView: View {
                 }
             }
             
-        }.navigationTitle("Catalog")
-            .onAppear {
-                print("Get data from Firebase")
-                 self.viewModel.getProducts()
-                print(viewModel.delishious)
+            Section("Main dishes") {
+                ScrollView(.vertical, showsIndicators: false) {
+                    LazyVGrid(columns: layout) {
+                        ForEach(viewModel.mainDishes, id: \.id) {
+                            item in
+                            
+                            NavigationLink {
+                                let viewModel = ProductDetailViewModel(product: item)
+                                ProductDetailedView(viewModel: viewModel)
+                            } label: {
+                                ProductCell(product: item)
+                                    .foregroundStyle(.black)
+                            }
+                        }
+                    } .padding()
+                }
             }
+            
+            Section("Desserts") {
+                ScrollView(.vertical, showsIndicators: false) {
+                    LazyVGrid(columns: layout) {
+                        ForEach(viewModel.desserts, id: \.id) {
+                            item in
+                            
+                            NavigationLink {
+                                let viewModel = ProductDetailViewModel(product: item)
+                                ProductDetailedView(viewModel: viewModel)
+                            } label: {
+                                ProductCell(product: item)
+                                    .foregroundStyle(.black)
+                            }
+                        }
+                    } .padding()
+                }
+            }
+            
+            
+        }//.navigationTitle("Catalog")
+           // .onAppear {
+           //      self.viewModel.getProducts()
+
+           // }
     }
 }
 

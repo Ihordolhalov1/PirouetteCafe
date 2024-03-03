@@ -54,7 +54,7 @@ struct ProfileView: View {
                     if viewModel.orders.count == 0 {
                         Text ("Here will be your orders")
                     } else {
-                        ForEach(viewModel.orders, id: \.id) { order in
+                        ForEach(viewModel.orders.sorted(by: { $0.date > $1.date }), id: \.id) { order in
                             OrderCell(order: order)
                         }
                     }

@@ -13,13 +13,17 @@ struct OrderCell: View {
 
     var body: some View {
         HStack {
-            Text(dateToString(date: order.date))
-            Text(stringPrice(price: order.cost)).bold().frame(width: 100)
-            Text("\(order.status)").frame(width: 120).foregroundColor(.green)
+            Text(dateToString(date: order.date)).lineLimit(1)
+            Spacer()
+            Text(stringPrice(price: order.cost)).bold().lineLimit(1)
+            Spacer()
+            //.frame(width: 100)
+            Text("\(order.status)").foregroundColor(.green).lineLimit(1)
+           // frame(width: 120).
         }
     }
 }
 
-/*#Preview {
+#Preview {
     OrderCell(order: Order(userID: "UserIS", date: Date(), status: "Status", address: "Address", dateToGet: Date()))
-}*/
+}

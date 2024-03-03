@@ -18,7 +18,7 @@ struct MainTabBar: View {
             
             NavigationView {
 
-                CatalogView()
+                CatalogView(viewModel: CatalogViewModel.shared)
                 
             }
                 .tabItem {
@@ -26,6 +26,9 @@ struct MainTabBar: View {
                         Image(systemName: "menucard")
                         Text("Catalog")
                     }
+                }
+                .onAppear() {
+                    CatalogViewModel.shared.getProducts()
                 }
                 .tag(2)
             

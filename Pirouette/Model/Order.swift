@@ -15,8 +15,7 @@ struct Order {
     var date: Date
     var status: String
     var address: String
-    var dateToGet: Date
-//    var countOfPerson: Int = 1
+    var dateToDeliver: Date
     
     var cost: Double {
         var sum = 0.0
@@ -34,7 +33,7 @@ struct Order {
         repres["date"] = Timestamp(date: date)
         repres["status"] = status
         repres["address"] = address
-        repres["dateToGet"] = Timestamp(date: dateToGet)
+        repres["dateToGet"] = Timestamp(date: dateToDeliver)
    //     repres ["countOfPerson"] = countOfPerson
         
         return repres
@@ -51,7 +50,7 @@ struct Order {
         self.date = date
         self.status = status
         self.address = address
-        self.dateToGet = dateToGet
+        self.dateToDeliver = dateToGet
     //    self.countOfPerson = countOfPerson
     }
     
@@ -70,7 +69,7 @@ struct Order {
         self.date = date.dateValue()
         self.status = status
         self.address = address
-        self.dateToGet = dateToGet.dateValue()
+        self.dateToDeliver = dateToGet.dateValue()
    //     self.countOfPerson = countOfPerson
     }
     

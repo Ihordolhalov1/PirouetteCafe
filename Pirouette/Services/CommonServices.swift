@@ -14,7 +14,7 @@ func stringPrice (price: Double) -> String {
 
 func dateToString(date: Date) -> String {
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "dd.MM.yyyy HH:mm"
+    dateFormatter.dateFormat = "dd.MM.YYYY HH:mm"
     let formattedDate = dateFormatter.string(from: date)
     return formattedDate
 }

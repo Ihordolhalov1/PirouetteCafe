@@ -85,5 +85,5 @@ struct ProductDetailedView: View {
 }
 
 #Preview {
-    ProductDetailedView(viewModel: ProductDetailViewModel(product: Product(id: "1", title: "Title1", price: 11.1, descript: "Savor the mouthwatering delight of our expertly fried salmon served alongside a vibrant array of fresh, seasonal vegetables. Enjoy the perfect balance of succulent salmon and crisp, flavorful vegetables, creating a dish that's as satisfying to the palate as it is nourishing for the soul. Dive into a symphony of flavors with our fried salmon with vegetables.")))
+    ProductDetailedView(viewModel: ProductDetailViewModel(product: Product(id: "1", title: "Title1", price: 11.1, descript: "Savor the mouthwatering delight of our expertly fried salmon served alongside a vibrant array of fresh, seasonal vegetables. Enjoy the perfect balance of succulent salmon and crisp, flavorful vegetables, creating a dish that's as satisfying to the palate as it is nourishing for the soul. Dive into a symphony of flavors with our fried salmon with vegetables.", isRecommended: false, isStarters: false, isMainDishes: false, isDesserts: false)))
 }
