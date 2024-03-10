@@ -9,8 +9,8 @@ import SwiftUI
 
 struct OrderView: View {
     @StateObject var viewModel: OrderViewModel
-    
-    var statuses = ["new", "in process", "in delivery", "Completed", "cancelled"]
+
+    var statuses = ["New", "In process", "Table booked", "In delivery", "Completed", "Cancelled"]
   
     var body: some View {
         
@@ -19,10 +19,15 @@ struct OrderView: View {
             Text("\(viewModel.user.name)").font(.title3).bold()
             Text("\(viewModel.user.phone)").bold()
             Text("\(viewModel.user.address)")
+            Text("Date of order: \(dateToString(date: viewModel.order.date))")
+            Text("Deadline: \(dateToString(date: viewModel.order.dateToDeliver))").bold()
+            Text("Where: \(viewModel.order.address)")
+
+            
             
             Picker(selection: $viewModel.order.status) {
                 ForEach(statuses, id: \.self) { status in
-                    Text(status)
+                Text(status)
                 }
             } label: {
                 Text("Status")
@@ -50,6 +55,7 @@ struct OrderView: View {
             .onAppear {
                 viewModel.getUserData()
             }
+            
     }
 }
 

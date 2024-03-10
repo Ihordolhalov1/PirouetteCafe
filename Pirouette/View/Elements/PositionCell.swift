@@ -18,7 +18,7 @@ struct PositionCell: View {
             Text("\(position.count) pcs")
             Text(stringPrice(price:position.cost))
             
-        }.padding(.horizontal)
+        }//.padding(.horizontal)
         
     }
 }

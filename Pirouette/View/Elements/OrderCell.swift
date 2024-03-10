@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct OrderCell: View {
+    @State var date: Date
+   // @State var status: String
     
     var order: Order
 
     var body: some View {
         HStack {
-            Text(dateToString(date: order.date)).lineLimit(1)
-            Spacer()
+            Text(dateToString(date: date)).lineLimit(1).padding(.trailing)        
             Text(stringPrice(price: order.cost)).bold().lineLimit(1)
             Spacer()
-            //.frame(width: 100)
             Text("\(order.status)").foregroundColor(.green).lineLimit(1)
            // frame(width: 120).
         }
@@ -25,5 +25,5 @@ struct OrderCell: View {
 }
 
 #Preview {
-    OrderCell(order: Order(userID: "UserIS", date: Date(), status: "Status", address: "Address", dateToGet: Date()))
+    OrderCell(date: Date(), order: Order(userID: "UserIS", date: Date(), status: "Status", address: "Address", dateToGet: Date()))
 }

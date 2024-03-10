@@ -13,6 +13,7 @@ struct CartView: View {
     @Binding var numberOfDishes: Int
 
     @State private var isAlertPresented = false
+    @State private var isAddressEmpty = false
     @State private var deliveryPicker = 0
     @State private var countOfPeople = 1
     @State private var address = "  "
@@ -153,12 +154,16 @@ struct CartView: View {
                     Spacer()
                     
                     Button(action: {
+                        if addressField.count < 5 {
+                            self.isAddressEmpty.toggle()
+                        } else {
+                            
                             isAlertPresented.toggle()
-                       
-                        var order = Order(userID: AuthService.shared.currentUser!.uid, date: Date(), status: OrderStatus.new.rawValue, address: address, dateToGet: selectedTime)
+                            print("ЗНАЧЕНИЕ isAlertPresented \(isAlertPresented) ")
+                            var order = Order(userID: AuthService.shared.currentUser!.uid, date: Date(), status: OrderStatus.new.rawValue, address: address, dateToGet: selectedTime)
                             order.positions = self.viewModel.positions
-                   
-                        
+                            
+                            
                             DatabaseService.shared.setOrder(order: order) { result in
                                 switch result{
                                 case .success(let order):
@@ -168,7 +173,7 @@ struct CartView: View {
                                 }
                             }
                             viewModel.positions.removeAll()
-                        
+                        }
                         
                         
                     }, label: {
@@ -186,11 +191,40 @@ struct CartView: View {
             
         }                  .navigationTitle("Cart")
 
-                .alert(isPresented: $isAlertPresented) {
+            .alert(
+                     "Thank you",
+                     isPresented: $isAlertPresented,
+                     actions: {
+                         Button("OK") {}
+                     },
+                     message: {
+                         Text("Order was accepted")
+                     }
+                 )
+                 .alert(
+                     "Address is undefined",
+                     isPresented: $isAddressEmpty,
+                     actions: {
+                         Button("Close") {}
+                     },
+                     message: {
+                         Text("Please let us know the shipping address")
+                     }
+                 )
+        
+        
+        
+        /*     .alert(isPresented: $isAlertPresented) {
                     Alert(title: Text("Thank you"), message:
                     Text("Order was accepted")
                 , dismissButton: .default(Text("OK")))
                 }
+        
+                .alert(isPresented: $isAddressEmpty) {
+                    Alert(title: Text("Address is unknown"), message:
+                    Text("Please define shipping address here or default address on Account page")
+                , dismissButton: .default(Text("OK")))
+                }*/
     }
 }
 

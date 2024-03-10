@@ -14,7 +14,8 @@ struct AdminOrderView: View {
     @State var isAuthViewShow = false
     // @State private var isAddProductViewShow = false
     
-    
+    private let timer = Timer.publish(every: 300, on: .main, in: .common).autoconnect() // 300 seconds = 5 minutes
+
     var body: some View {
         
         VStack {
@@ -51,20 +52,29 @@ struct AdminOrderView: View {
             
             List {
                 ForEach(viewModel.orders,  id:\.id) {order in
-                    OrderCell(order: order)
+                    OrderCell(date: order.dateToDeliver, order: order)
                         .onTapGesture {
                             viewModel.currentOrder = order
                             isOrderViewShow.toggle()
                         }
                 }
             }.listStyle(.plain)
+                .refreshable {
+                    viewModel.getOrders()
+                }
                 .onAppear {
                     viewModel.getOrders()
                 }
-                .sheet(isPresented: $isOrderViewShow) {
+                .onReceive(timer) { _ in
+                           viewModel.getOrders() // Reload orders every 5 minutes
+                       }
+                .sheet(isPresented: $isOrderViewShow, onDismiss: {
+                    viewModel.getOrders() // Reload orders when OrderView is dismissed
+                }) {
                     let orderViewModel = OrderViewModel(order: viewModel.currentOrder)
                     OrderView(viewModel: orderViewModel)
                 }
+
         } .fullScreenCover(isPresented: $isAuthViewShow, content: {
             AuthView()
         })
