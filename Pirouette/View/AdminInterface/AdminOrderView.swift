@@ -51,13 +51,15 @@ struct AdminOrderView: View {
             
             
             List {
-                ForEach(viewModel.orders,  id:\.id) {order in
+                ForEach(viewModel.orders.sorted(by: { $0.date > $1.date }),  id:\.id) {order in
                     OrderCell(date: order.dateToDeliver, order: order)
                         .onTapGesture {
                             viewModel.currentOrder = order
                             isOrderViewShow.toggle()
                         }
                 }
+                
+                
             }.listStyle(.plain)
                 .refreshable {
                     viewModel.getOrders()

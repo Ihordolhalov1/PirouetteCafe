@@ -39,7 +39,7 @@ struct CartView: View {
                         }.tint(.red)
                     }
             }.listStyle(.plain)
-                .onChange(of: viewModel.positions.count) {
+                .onChange(of: viewModel.positions.count) {  newValue in 
                     
                     viewModel.countOfPositions = viewModel.positions.count
                     numberOfDishes = viewModel.countOfPositions
@@ -61,7 +61,7 @@ struct CartView: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .padding()
                 
-                .onChange(of: deliveryPicker) {
+                .onChange(of: deliveryPicker) {  newValue in
                     switch deliveryPicker {
                     case 1:
                         address = "Book a table for \(countOfPeople)"
@@ -78,7 +78,7 @@ struct CartView: View {
                 case 1:
                     HStack {
                         Stepper("For how many person?     " + "\(self.countOfPeople)", value: $countOfPeople, in: 1...50)
-                            .onChange(of: countOfPeople) {
+                            .onChange(of: countOfPeople) {  newValue in
                                 address = "Book a table for \(countOfPeople)"
                             }
                     }.padding(.horizontal).font(.subheadline.bold())
@@ -101,7 +101,7 @@ struct CartView: View {
                                     }
                                 }
                             }
-                            .onChange(of: addressField) {
+                            .onChange(of: addressField) {  newValue in
                                 address = "We will deliver to address: \(addressField)"
                             }
                         

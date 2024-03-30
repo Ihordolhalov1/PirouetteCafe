@@ -56,5 +56,13 @@ class AuthService {
        try! auth.signOut()
     }
     
+    func resetPassword(email: String, completion: @escaping (Result<User, Error>) -> ()) {
+        auth.sendPasswordReset(withEmail: email) { error in
+             if let error = error {
+                completion(.failure(error))
+            }
+        }
+    }
+    
     
 }

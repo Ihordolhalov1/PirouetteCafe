@@ -21,14 +21,17 @@ struct AuthView: View {
         VStack {
             VStack {
                 TextField("Enter your email", text: $email)
+                    .autocapitalization(.none)
                     .padding()
                     .background(Color("whiteAlpha"))
+                    .foregroundColor(Color.black)
                     .cornerRadius(12)
                     .padding(8)
                 
                 SecureField("Enter your password", text: $password)
                     .padding()
                     .background(Color("whiteAlpha"))
+                    .foregroundColor(Color.black)
                     .cornerRadius(12)
                     .padding(8)
                 
@@ -48,9 +51,14 @@ struct AuthView: View {
                             switch result {
                             case .success(_):
                                 isTabViewShow.toggle()
+                            
+
 
                             case .failure(let error):
                                 alertMessage = "Error of authorisation: \(error.localizedDescription)"
+                                print("AlertMessage is", alertMessage)
+                                self.isShowAlert.toggle()
+
                             }
                         }
                     } else {
@@ -85,11 +93,18 @@ struct AuthView: View {
                 })
                 
                 if isAuth {
-                    Text("Forgot password?")
-                        .foregroundStyle(Color(.whiteAlpha))
-                        .onTapGesture {
-                            print("Forgot password")
-                        }
+                    if email.contains("@") {
+                        Text("Forgot password?")
+                            .foregroundStyle(Color(.whiteAlpha))
+                            .onTapGesture {
+                                alertMessage = "Link to recover password will be sent to email \(email)"
+                                AuthService.shared.resetPassword(email: email) { error in
+                                    print(error)
+                                }
+                                self.isShowAlert.toggle()
+
+                            }
+                    }
                 }
 
             } .padding(.top, 100)
@@ -110,13 +125,16 @@ struct AuthView: View {
             
             
             
+        } .onAppear() {
+            AuthService.shared.signOut() //Выгрузить пользователя
+
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Image("bg2").ignoresSafeArea())
         .padding()
         .animation(.easeInOut(duration: 0.3), value: isAuth)
         .fullScreenCover(isPresented: $isTabViewShow, content: {
-            if AuthService.shared.currentUser?.uid == adminID {
+            if AuthService.shared.currentUser?.uid == adminID || AuthService.shared.currentUser?.uid == admin2ID {
                 AdminOrderView()
 
             } else {

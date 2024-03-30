@@ -24,6 +24,7 @@ struct ProfileView: View {
                         TextField("Name ", text: $viewModel.profile.name)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .onChange(of: viewModel.profile.name) {
+                                newValue in
                                 viewModel.setProfile()
                             }
                     }
@@ -33,6 +34,7 @@ struct ProfileView: View {
                             TextField("+49 176 12345678", text: $viewModel.profile.phone)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .onChange(of: viewModel.profile.phone) {
+                                    newValue in
                                     viewModel.setProfile()
                                 }
                         }
@@ -41,6 +43,7 @@ struct ProfileView: View {
                         TextField("Address", text: $viewModel.profile.address)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .onChange(of: viewModel.profile.address) {
+                                newValue in
                                 viewModel.setProfile()
                                 
                             }
