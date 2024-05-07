@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct CatalogView: View {
-    
     let layout = [GridItem(.adaptive(minimum: screen.width / 3))]
     @StateObject var viewModel = CatalogViewModel()
 

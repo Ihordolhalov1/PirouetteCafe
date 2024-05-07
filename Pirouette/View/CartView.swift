@@ -114,17 +114,7 @@ struct CartView: View {
                     HStack {
                         TextField("Write your address here", text: $addressField)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
-                          /*  .onAppear() {
-                                DatabaseService.shared.getProfile(by: AuthService.shared.currentUser!.uid) { result in
-                                    switch result {
-                                    case .success(let res):
-                                        addressField =  res.address
-                                    case .failure(let error):
-                                        print("ПОМИЛКА НА ОТРИМАННІ ДЕФОЛТНОЇ АДРЕСИ")
-                                        print(error.localizedDescription)
-                                    }
-                                }
-                            } */
+                          
                             .onChange(of: addressField) {  newValue in
                                 address = "We will deliver to address: \(addressField)"
                             }
@@ -138,21 +128,7 @@ struct CartView: View {
 
                 }
                 
-              /*  DatePicker(selection: $selectedTime, in: Date()..., displayedComponents: .hourAndMinute) {
-                    Text("Please select time").padding()
-                }
-                .datePickerStyle(CompactDatePickerStyle())
-                .padding()
-                .onAppear {
-                    UIDatePicker.appearance().minuteInterval = 15
-                    
-                    let minuteInterval = 15
-                    let calendar = Calendar.current
-                    let currentMinute = calendar.component(.minute, from: selectedTime)
-                    let roundedMinute = (currentMinute / minuteInterval) * minuteInterval
-                    let roundedDate = calendar.date(bySetting: .minute, value: roundedMinute, of: selectedTime)!
-                    selectedTime = roundedDate
-                */
+             
                 let currentDate = Date()
                 let calendar = Calendar.current
                 let currentDatePlus30Minutes = calendar.date(byAdding: .minute, value: 30, to: currentDate)!
@@ -204,17 +180,7 @@ struct CartView: View {
                     Spacer()
                     
                     Button(action: {
-                     /*   DatabaseService.shared.getProfile(by: AuthService.shared.currentUser!.uid) { result in
-                            switch result {
-                            case .success(let res):
-                                clientName = res.name
-                                clientPhone =  res.phone
-                            case .failure(let error):
-                                print("ПОМИЛКА НА ОТРИМАННІ ДЕФОЛТНОГО IМʼЯ та НОМЕРА ТЕЛЕФОНУ")
-                                print(error.localizedDescription)
-                            }
-                        } */
-                    
+                        
                         if clientName.count < 2 || clientPhone.count < 6 {
                             isNameOrPhoneEmpty.toggle()
                         } else {

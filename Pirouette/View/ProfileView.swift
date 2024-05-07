@@ -47,6 +47,11 @@ struct ProfileView: View {
                                 viewModel.setProfile()
                                 
                             }
+                Text(viewModel.profile.id)
+                Text("")
+
+                Text(viewModel.profile.token)
+                Text(pushMessage)
                 }.padding()
              
 
@@ -96,5 +101,5 @@ struct ProfileView: View {
 //}
 
 #Preview {
-    ProfileView(viewModel: ProfileViewModel(profile: MVUser(id: "1", name: "Name", phone: "+49 123 0672351537", address: "Address")))
+    ProfileView(viewModel: ProfileViewModel(profile: DetailedUser(id: "1", name: "Name", phone: "+49 123 0672351537", address: "Address", token: "token")))
 }

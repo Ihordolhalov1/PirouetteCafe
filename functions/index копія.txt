@@ -1,0 +1,89 @@
+const functions = require("firebase-functions/v1");
+const admin = require("firebase-admin" );
+admin.initializeApp({
+  credential: admin.credential.applicationDefault(),
+});
+
+const firestore = admin.firestore();
+
+exports.notifyClient = functions.firestore.document('orders/{orderId}');
+    .onUpdate((change, context) => {
+      const newValue = change.after.data();
+      const oldValue = change.before.data();
+
+      // Check if the status field has changed
+      if (newValue.status !== oldValue.status) {
+        const userID = newValue.userID;
+        console.log("UserID is ");
+        console.log(userID);
+
+        try {
+          // Retrieve the user document from the 'users' collection
+          const userDoc = await firestore.collection('users').doc(userID).get();
+          if (userDoc.exists) {
+            const userData = userDoc.data();
+            const token = userData.token;
+            console.log("Token is ");
+            console.log(token);
+
+            // Send push notification to the user's token
+            await sendPushNotification(token, `Your order status has been updated to: ${newValue.status}`);
+            console.log('Push notification sent successfully.');
+            } else {
+            console.log('User document not found.');
+            }
+            } catch (error) {
+            console.error('Error sending push notification:', error);
+        }
+      }
+
+      return null;
+    });
+
+async function sendPushNotification(token, message) {
+  // Implement code to send push notification to the provided token (using Firebase Cloud Messaging, OneSignal, etc.)
+  // Example using Firebase Cloud Messaging:
+  const payload = {
+    notification: {
+      title: 'Order Update',
+      body: message
+      }
+    };
+
+  await admin.messaging().send(token, payload);
+}
+
+// exports.notifyClient = functions.firestore.document("orders/{orderId}")
+//    .onUpdate(async (doc, context) => {
+//      const db = admin.firestore();
+//      const title = "Status";
+//      const text = "Has been changed";
+//      const userId = context.params.userID;
+//      console.log("UserID is ");
+//      console.log(userId);
+//      let userToken = "";
+//      try {
+//        const data = await db.collection("users").doc(userId).get();
+//        const token = data.data().token;
+//        userToken = token;
+//        console.log("User token is ");
+//        console.log(userToken);
+//      } catch (error) {
+//        console.log("Error was catched on line 22");
+//        console.log(error);
+//      }
+//      const message = {
+//        notification: {
+//          title: title,
+//          body: text,
+//        },
+//        token: userToken,
+//      };
+//      admin.messaging().send(message)
+//          .then((responce) => {
+//            console.log(responce);
+//          })
+//          .catch((error) => {
+//            console.log(error);
+//          });
+//    });

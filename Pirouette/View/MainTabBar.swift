@@ -29,6 +29,7 @@ struct MainTabBar: View {
                 }
                 .onAppear() {
                     CatalogViewModel.shared.getProducts()
+
                 }
                 .tag(2)
             
@@ -44,16 +45,26 @@ struct MainTabBar: View {
                 .tag(1)
                 .badge(count)
                 .onAppear {
+                    print("ЗАйшли в корзину")
                            // Переключаемся на вкладку CatalogView после некоторой задержки
                     if isFirstLanch {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                             isFirstLanch = false
-                            selection = 2
+                            selection = 3
+                            print("ЗАйшли в профайл")
+
+
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                selection = 2
+                                print("ЗАйшли в каталог")
+
+                            }
                         }
                     }
                        }
+                
             
-            ProfileView(viewModel: ProfileViewModel(profile: MVUser(id: viewModel.user.uid, name: "", phone: "", address: "")))
+            ProfileView(viewModel: ProfileViewModel(profile: DetailedUser(id: viewModel.user.uid, name: "", phone: "", address: "", token: deviceToken)))
                 .tabItem {
                     VStack {
                         Image(systemName: "person.circle")
@@ -61,9 +72,10 @@ struct MainTabBar: View {
                     }
                 }
                 .tag(3)
+               
             
         } 
-      
+        
     }
 }
 

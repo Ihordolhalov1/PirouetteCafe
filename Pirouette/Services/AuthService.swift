@@ -23,10 +23,11 @@ class AuthService {
         return auth.currentUser
     }
     
-    func signUp(email: String, password: String, completion: @escaping (Result<User, Error>) -> ()) {
+    func signUp(email: String, password: String, completion: @escaping (Result<User, Error>) -> ()) { //создать DetailedUser
         auth.createUser(withEmail: email, password: password) { result, error in
             if let result = result {
-                let mwUser = MVUser(id: result.user.uid, name: "Name", phone: "", address: "Address")
+                let mwUser = DetailedUser(id: result.user.uid, name: "New user", phone: "", address: "Address of new user", token: deviceToken)
+                print("Відпрацював метод signUp")
                 DatabaseService.shared.setProfile(user: mwUser) { resultDB in
                     switch resultDB {
                     case .success(_):
@@ -44,6 +45,8 @@ class AuthService {
     func signIn(email: String, password: String, completion: @escaping (Result<User, Error>) -> ()) {
         auth.signIn(withEmail: email, password: password) { result, error in
             if let result = result {
+                print("Відпрацював метод signIn")
+                print("Tокен: ", deviceToken)
                 completion(.success(result.user))
             } else if let error = error {
                 completion(.failure(error))

@@ -10,16 +10,16 @@ import FirebaseStorage
 
 class ProfileViewModel: ObservableObject {
     
-    @Published var profile: MVUser
+    @Published var profile: DetailedUser
     @Published var orders: [Order] = [Order]()
     
-    init(profile: MVUser) {
+    init(profile: DetailedUser) {
         self.profile = profile
     }
     
     func getOrders() {
-        DatabaseService.shared.getOrders(by: AuthService.shared.currentUser!.accessibilityHint) { result in
-            
+        DatabaseService.shared.getOrders(by: AuthService.shared.currentUser!.uid) { result in
+      //  DatabaseService.shared.getOrders(by: profile.id) { result in
             switch result {
             case .success (let orders):
                 self.orders = orders
@@ -46,8 +46,9 @@ class ProfileViewModel: ObservableObject {
     func setProfile() {
         DatabaseService.shared.setProfile(user: self.profile) { result in
             switch result {
-            case .success(let user):
-                print(user.name)
+            case .success(_):
+                print("Відпрацював метод setProfile")
+                print("token is ", deviceToken)
             case .failure(let error):
                 print ("Error: \(error.localizedDescription)")
             }

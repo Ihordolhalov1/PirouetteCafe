@@ -12,9 +12,13 @@ struct AdminOrderView: View {
     @StateObject var viewModel = AdminOrdersViewModel()
     @State var isOrderViewShow = false
     @State var isAuthViewShow = false
+    @State private var showProfileView = true
+ //   @StateObject var profileViewModel: ProfileViewModel
+
+
     // @State private var isAddProductViewShow = false
     
-    private let timer = Timer.publish(every: 300, on: .main, in: .common).autoconnect() // 300 seconds = 5 minutes
+    private let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect() // 300 seconds = 5 minutes
 
     var body: some View {
         
@@ -68,7 +72,7 @@ struct AdminOrderView: View {
                     viewModel.getOrders()
                 }
                 .onReceive(timer) { _ in
-                           viewModel.getOrders() // Reload orders every 5 minutes
+                           viewModel.getOrders() // Reload orders every 1 minutes
                        }
                 .sheet(isPresented: $isOrderViewShow, onDismiss: {
                     viewModel.getOrders() // Reload orders when OrderView is dismissed

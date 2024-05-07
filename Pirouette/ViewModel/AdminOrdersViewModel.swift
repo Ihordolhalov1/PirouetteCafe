@@ -12,6 +12,15 @@ class AdminOrdersViewModel: ObservableObject {
     @Published var orders = [Order]()
     var currentOrder = Order(userID: "", date: Date(), status: "", address: "Restaurant", dateToGet: Date())
     
+//    let profile = DetailedUser(id: AuthService.shared.currentUser?.uid!, name: "Admin", phone: "Admin", address: "Admin", token: deviceToken)
+    
+    //init(profile: DetailedUser) {
+    //    self.profile = profile
+    //}
+    
+    
+    
+    
     func getOrders() {
         DatabaseService.shared.getOrders(by: nil) { result in
             switch result {

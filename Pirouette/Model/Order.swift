@@ -16,6 +16,7 @@ struct Order {
     var status: String
     var address: String
     var dateToDeliver: Date
+  //  var clientToken: String
     
     var cost: Double {
         var sum = 0.0
@@ -34,6 +35,7 @@ struct Order {
         repres["status"] = status
         repres["address"] = address
         repres["dateToGet"] = Timestamp(date: dateToDeliver)
+ //       repres["clientToken"] = clientToken
    //     repres ["countOfPerson"] = countOfPerson
         
         return repres
@@ -51,6 +53,7 @@ struct Order {
         self.status = status
         self.address = address
         self.dateToDeliver = dateToGet
+    //    self.clientToken = clientToken
     //    self.countOfPerson = countOfPerson
     }
     
@@ -62,6 +65,7 @@ struct Order {
         guard let status = data["status"] as? String else { return nil }
         guard let address = data["address"] as? String else { return nil }
         guard let dateToGet = data["dateToGet"] as? Timestamp else { return nil }
+    //    guard let clientToken = data["clientToken"] as? String else { return nil }
      //   guard let countOfPerson = data["countOfPerson"] as? Int else { return nil }
 
         self.id = id
@@ -70,6 +74,7 @@ struct Order {
         self.status = status
         self.address = address
         self.dateToDeliver = dateToGet.dateValue()
+   //     self.clientToken = clientToken
    //     self.countOfPerson = countOfPerson
     }
     

@@ -49,16 +49,20 @@ struct AuthView: View {
                         
                         AuthService.shared.signIn(email: self.email, password: self.password) { result in
                             switch result {
-                            case .success(_):
+                            case .success(let user):
+                                print("Логін успішний")
+                                print(user)
+                                DatabaseService.shared.updateToken()
+
                                 isTabViewShow.toggle()
-                            
-
-
+                                
+                                
+                                
                             case .failure(let error):
                                 alertMessage = "Error of authorisation: \(error.localizedDescription)"
                                 print("AlertMessage is", alertMessage)
                                 self.isShowAlert.toggle()
-
+                                
                             }
                         }
                     } else {
@@ -69,7 +73,7 @@ struct AuthView: View {
                             self.isShowAlert.toggle()
                             return
                         }
-                        AuthService.shared.signUp(email: self.email, password: self.password) { result in
+                        AuthService.shared.signUp(email: self.email, password: self.password) { result in ////создать DetailedUser
                             switch result {
                             case .success(_):
                                 alertMessage = "Registration successful"
@@ -77,16 +81,18 @@ struct AuthView: View {
                                 self.email = ""
                                 self.password = ""
                                 self.repeatPassword = ""
+                                DatabaseService.shared.updateToken()
+
                                 self.isAuth.toggle()
-                                   
+                                
                             case .failure(let error):
                                 alertMessage = "Registration failure \(error.localizedDescription)"
                                 self.isShowAlert.toggle()
-
+                                
                             }
                         }
                         
-                       
+                        
                     }
                 }, label: {
                     CustomButton(text: isAuth ? "Log In" : "Sign Up", opacity: 1.0)
@@ -102,32 +108,32 @@ struct AuthView: View {
                                     print(error)
                                 }
                                 self.isShowAlert.toggle()
-
+                                
                             }
                     }
                 }
-
+                
             } .padding(.top, 100)
-
-                VStack {
-                    Button(action: {
-                        isAuth.toggle()
-                    }, label: {
-                        CustomButton (text: isAuth ? "Sign Up" : "Log In", opacity: 0.6)
-                    })
-                }.padding(.top, 100)
+            
+            VStack {
+                Button(action: {
+                    isAuth.toggle()
+                }, label: {
+                    CustomButton (text: isAuth ? "Sign Up" : "Log In", opacity: 0.6)
+                })
+            }.padding(.top, 100)
                 .alert(alertMessage, isPresented: $isShowAlert) {
                     Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
                         Text("Ok")
                     })
                 }
-
+            
             
             
             
         } .onAppear() {
             AuthService.shared.signOut() //Выгрузить пользователя
-
+            
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Image("bg2").ignoresSafeArea())
@@ -136,13 +142,13 @@ struct AuthView: View {
         .fullScreenCover(isPresented: $isTabViewShow, content: {
             if AuthService.shared.currentUser?.uid == adminID || AuthService.shared.currentUser?.uid == admin2ID {
                 AdminOrderView()
-
-            } else {
-                let mainTabBarViewModel = MainTabBarViewModel(user: AuthService.shared.currentUser!)
-                MainTabBar(viewModel: mainTabBarViewModel)
-            }
             
-        })
+        } else {
+            let mainTabBarViewModel = MainTabBarViewModel(user: AuthService.shared.currentUser!)
+            MainTabBar(viewModel: mainTabBarViewModel)
+        }
+                         
+                         })
     }
 }
 

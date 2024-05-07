@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseMessaging
 
 class DatabaseService {
     static let shared = DatabaseService()
@@ -60,12 +61,16 @@ class DatabaseService {
                     } else {
                         //ветка админа
                         if let order = Order(doc: doc) {
+                            print("Я В DATABASESERVICE getOrders method, ветка админа")
+
                             orders.append(order)
                         }
                     }
                 }
                 
                 completion(.success(orders))
+                DatabaseService.shared.updateToken()
+
             } else if let error = error {
                 completion(.failure(error))
             }
@@ -105,7 +110,7 @@ class DatabaseService {
         
     }
     
-    func setProfile(user: MVUser, completion: @escaping (Result<MVUser, Error>) -> ()) {
+    func setProfile(user: DetailedUser, completion: @escaping (Result<DetailedUser, Error>) -> ()) {
         usersRef.document(user.id).setData(user.representation) {
             error in
             if let error = error {
@@ -117,7 +122,7 @@ class DatabaseService {
     }
     
     
-    func getProfile(by userID:String? = nil, completion: @escaping (Result<MVUser, Error>) -> ()) {
+    func getProfile(by userID:String? = nil, completion: @escaping (Result<DetailedUser, Error>) -> ()) {
         usersRef.document(userID != nil ? userID! : AuthService.shared.currentUser!.uid).getDocument { docSnapshot, error in
             guard let snap = docSnapshot else { return }
             guard let data = snap.data() else { return }
@@ -126,8 +131,9 @@ class DatabaseService {
             guard let id = data["id"] as? String else { return }
             guard let phone = data["phone"] as? String else { return }
             guard let address = data["address"] as? String else { return }
+        //    guard let token = data["token"] as? String else { return }
 
-            let user = MVUser(id: id, name: userName, phone: phone, address: address)
+            let user = DetailedUser(id: id, name: userName, phone: phone, address: address, token: deviceToken)
             completion(.success(user))
         }
     }
@@ -156,6 +162,27 @@ class DatabaseService {
             completion(.success(products))
             }
     }
+    
+    
+    func updateToken() {
+        let id = AuthService.shared.currentUser?.uid
+        if let id = id {
+            let userRef = db.collection("users").document(id)
+            
+            userRef.updateData(["token": deviceToken]) { error in
+                if let error = error {
+                    print("Error updating token: \(error.localizedDescription)")
+                } else {
+                    print("Token updated successfully.")
+                    print("deviceToken is ", deviceToken)
+                }
+            }
+        }
+    }
+    
+    
+    
+    
     
     
 }

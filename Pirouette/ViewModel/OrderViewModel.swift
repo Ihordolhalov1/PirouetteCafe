@@ -10,7 +10,7 @@ import Foundation
 class OrderViewModel: ObservableObject {
     
     @Published var order: Order
-    @Published var user = MVUser(id: "", name: "", phone: "", address: "")
+    @Published var user = DetailedUser(id: "", name: "", phone: "", address: "", token: deviceToken)
     
     init(order: Order) {
         self.order = order

@@ -63,7 +63,17 @@ struct OrderView: View {
              
                 
             }
-            Text(stringPrice(price:viewModel.order.cost)).bold()
+            
+            Text("Total amount: \(stringPrice(price:viewModel.order.cost))").bold()
+            
+        /*    Button(action: {
+               
+                    
+                
+            }, label: {
+                
+                CustomButton(text: "Send push", opacity: 1.0)
+            }) */
             
         }.padding()
             .onAppear {
