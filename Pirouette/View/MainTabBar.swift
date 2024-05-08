@@ -73,6 +73,14 @@ struct MainTabBar: View {
                 }
                 .tag(3)
                
+            MapView()
+                .tabItem {
+                    VStack {
+                        Image(systemName: "map.circle")
+                        Text("Contact")
+
+                    }
+                }
             
         } 
         
