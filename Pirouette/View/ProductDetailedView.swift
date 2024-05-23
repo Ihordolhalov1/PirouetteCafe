@@ -42,20 +42,6 @@ struct ProductDetailedView: View {
                     .padding(.horizontal)
                     .padding(.vertical, 1)
                 
-                
-                
-                
-                /*    Picker("Size", selection: $size) {
-                 ForEach(viewModel.sizes, id: \.self) {
-                 item in
-                 Text(item)
-                 }
-                 
-                 } .pickerStyle(.segmented).padding() */
-                
-                
-                
-                
             }
         }.alert(isPresented: $isAlertPresented) {
             Alert(title: Text(viewModel.product.title), message:

@@ -48,10 +48,7 @@ struct ProfileView: View {
                                 
                             }
                 Text(viewModel.profile.id)
-                Text("")
 
-                Text(viewModel.profile.token)
-                Text(pushMessage)
                 }.padding()
              
 

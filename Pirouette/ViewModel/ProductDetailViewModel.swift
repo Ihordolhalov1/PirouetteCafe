@@ -12,7 +12,6 @@ class ProductDetailViewModel: ObservableObject {
     
     @Published var product: Product
     @Published var sizes = ["Small", "Medium", "Ladge"]
-   // @Published var image = UIImage(named: "caviarPancakes")!
     @Published var image = UIImage(systemName: "takeoutbag.and.cup.and.straw")!
     
     init(product: Product) {
@@ -41,7 +40,7 @@ class ProductDetailViewModel: ObservableObject {
             case .success(let data):
                 if let image = UIImage(data: data) {
                     self.image = image
-                    print("IMAGE WAS CHANGES SUCCESSFULLY!!!")
+                    print("Відпрацював метод getImage() з ProductDetailViewModel. IMAGE WAS CHANGES SUCCESSFULLY!!!")
                 }
             case .failure(let error):
                 print("ERROR OCCURED ON getImage()")

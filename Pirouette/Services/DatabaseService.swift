@@ -152,13 +152,10 @@ class DatabaseService {
             var products = [Product]()
             
             for doc in docs {
-                guard let product = Product(doc: doc) else { 
-                    print("ПОМИЛКА ОТРИМАННЯ НА DatabaseService.getProducts2")
-                    print()
+                guard let product = Product(doc: doc) else {
                     return }
             products.append(product)
             }
-            print("УСПЕШНО НА DatabaseService.getProducts")
             completion(.success(products))
             }
     }

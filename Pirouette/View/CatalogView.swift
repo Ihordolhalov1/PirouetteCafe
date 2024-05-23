@@ -15,7 +15,11 @@ struct CatalogView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
 
-            Section("Recommended by Chef") {
+            Section(header:
+                            Text("Recommended by Chef")
+                                .font(.headline)
+                                .bold()
+                        )  {
                 ScrollView(.vertical, showsIndicators: false) {
                     LazyVGrid(columns: layout) {
                         ForEach(viewModel.recommended, id: \.id) {
@@ -34,7 +38,11 @@ struct CatalogView: View {
             }
             
             
-            Section("Starters") {
+            Section(header:
+                            Text("Starters")
+                                .font(.headline)
+                                .bold()
+                        )  {
                 ScrollView(.vertical, showsIndicators: false) {
                     LazyVGrid(columns: layout) {
                         ForEach(viewModel.starters, id: \.id) {
@@ -52,7 +60,11 @@ struct CatalogView: View {
                 }
             }
             
-            Section("Main dishes") {
+            Section(header:
+                            Text("Main dishes")
+                                .font(.headline)
+                                .bold()
+                        )   {
                 ScrollView(.vertical, showsIndicators: false) {
                     LazyVGrid(columns: layout) {
                         ForEach(viewModel.mainDishes, id: \.id) {
@@ -70,7 +82,11 @@ struct CatalogView: View {
                 }
             }
             
-            Section("Desserts") {
+            Section(header:
+                            Text("Desserts")
+                                .font(.headline)
+                                .bold()
+                        )   {
                 ScrollView(.vertical, showsIndicators: false) {
                     LazyVGrid(columns: layout) {
                         ForEach(viewModel.desserts, id: \.id) {
@@ -89,11 +105,7 @@ struct CatalogView: View {
             }
             
             
-        }//.navigationTitle("Catalog")
-           // .onAppear {
-           //      self.viewModel.getProducts()
-
-           // }
+        }
     }
 }
 

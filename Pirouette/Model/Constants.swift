@@ -12,5 +12,3 @@ let adminID = "8NAvUWqB88UoYCfjp0jmMdIyDmg1"
 let admin2ID = "unAUDaYLqjbXpkNOAwYXZcmAG7l1"
 
 var deviceToken = "No token yet"
-
-var pushMessage = "not defined"

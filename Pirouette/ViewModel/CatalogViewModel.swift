@@ -29,7 +29,7 @@ class CatalogViewModel: ObservableObject {
             switch result {
             case .success(let products):
                 self.allProducts = products
-                print("УСПЕШНОЕ ПОЛУЧЕНИЕМ ПРОДУКТА С FB")
+                print("Відпрацював метод getProducts з CatalogViewModel. УСПЕШНОЕ ПОЛУЧЕНИЕМ ПРОДУКТА С FB")
                 
                 self.recommended.removeAll()
                 self.starters.removeAll()
@@ -39,25 +39,21 @@ class CatalogViewModel: ObservableObject {
                 for product in products {
                     if product.isRecommended {
                         self.recommended.append(product)
-                        print("ДОДАЮ РЕКОМЕНДОВАНОЕ")
                     }
                     if product.isStarters {
                         self.starters.append(product)
-                        print("ДОДАЮ Starters")
                     }
                     if product.isMainDishes {
                         self.mainDishes.append(product)
-                        print("ДОДАЮ mainDishes")
                     }
                     if product.isDesserts {
                         self.desserts.append(product)
-                        print("ДОДАЮ desserts")
                     }
                     
                 }
                 
             case .failure(let error):
-                print("ОШИБКА С ПОЛУЧЕНИЕМ ПРОДУКТА С FB")
+                print("Відпрацював метод getProducts з CatalogViewModel. ОШИБКА С ПОЛУЧЕНИЕМ ПРОДУКТА С FB")
                 print(error.localizedDescription)
             }
         }

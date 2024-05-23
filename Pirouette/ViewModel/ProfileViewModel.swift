@@ -34,7 +34,8 @@ class ProfileViewModel: ObservableObject {
                         }
                     }
                 }
-                
+                print("Відпрацював метод getOrders з ProfileViewModel")
+
                 print( "Total amount of orders: \(orders.count)")
             case .failure (let error):
                 print(error.localizedDescription)
@@ -47,7 +48,7 @@ class ProfileViewModel: ObservableObject {
         DatabaseService.shared.setProfile(user: self.profile) { result in
             switch result {
             case .success(_):
-                print("Відпрацював метод setProfile")
+                print("Відпрацював метод setProfile з ProfileViewModel")
                 print("token is ", deviceToken)
             case .failure(let error):
                 print ("Error: \(error.localizedDescription)")
@@ -61,6 +62,8 @@ class ProfileViewModel: ObservableObject {
             switch result {
                 
             case .success(let user):
+                print("Відпрацював метод getProfile з ProfileViewModel")
+
                 self .profile = user
             case .failure(let error):
                 print(error.localizedDescription)
