@@ -8,11 +8,18 @@
 import SwiftUI
 
 struct CatalogView: View {
+    @StateObject private var networkMonitor = NetworkMonitor()
+    @State private var showNetworkAlert = false
+
+    
     let layout = [GridItem(.adaptive(minimum: screen.width / 3))]
     @StateObject var viewModel = CatalogViewModel()
 
     
     var body: some View {
+        
+       
+        
         ScrollView(.vertical, showsIndicators: false) {
 
             Section(header:
@@ -106,6 +113,19 @@ struct CatalogView: View {
             
             
         }
+        .onAppear {
+            if !networkMonitor.isConnected {
+                showNetworkAlert = true
+            }
+        }
+        .alert(isPresented: $showNetworkAlert) {
+                   Alert(
+                       title: Text("No Internet Connection"),
+                       message: Text("Please check your internet connection."),
+                       dismissButton: .default(Text("OK"))
+                   )
+               }
+        
     }
 }
 

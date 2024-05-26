@@ -47,7 +47,7 @@ struct ProfileView: View {
                                 viewModel.setProfile()
                                 
                             }
-                Text(viewModel.profile.id)
+        //        Text(viewModel.profile.id)
 
                 }.padding()
              

@@ -13,6 +13,11 @@ struct MainTabBar: View {
     @State var selection = 1
     @State private var isFirstLanch = true //Нужен чтоб отследить что запуск приложения первый раз и нужно активировать CartView перед CatalogView чтоб заработал счетчик товара в корзине
     
+    @StateObject private var networkMonitor = NetworkMonitor()
+    @State private var showNetworkAlert = false
+
+    
+    
     var body: some View {
         TabView(selection: $selection) {
             
@@ -29,8 +34,18 @@ struct MainTabBar: View {
                 }
                 .onAppear() {
                     CatalogViewModel.shared.getProducts()
+                    if !networkMonitor.isConnected {
+                        showNetworkAlert = true
+                    }
 
                 }
+                .alert(isPresented: $showNetworkAlert) {
+                           Alert(
+                               title: Text("No Internet Connection"),
+                               message: Text("Please check your internet connection."),
+                               dismissButton: .default(Text("OK"))
+                           )
+                       }
                 .tag(2)
             
             CartView(viewModel: CartViewModel.shared, numberOfDishes: $count)

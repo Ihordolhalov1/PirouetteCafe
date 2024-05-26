@@ -54,6 +54,7 @@
 		5DD24FEA2BEA8C6200C84F4F /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD24FE92BEA8C6200C84F4F /* MapView.swift */; };
 		5DE2ACD82B669A2600B619E6 /* OrderStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE2ACD72B669A2600B619E6 /* OrderStatus.swift */; };
 		5DE51A092B7AB26B00B14218 /* AddProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE51A082B7AB26B00B14218 /* AddProductView.swift */; };
+		5DE52FC92C00AF8300D0771D /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE52FC82C00AF8300D0771D /* NetworkMonitor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,6 +101,7 @@
 		5DD24FE92BEA8C6200C84F4F /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		5DE2ACD72B669A2600B619E6 /* OrderStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderStatus.swift; sourceTree = "<group>"; };
 		5DE51A082B7AB26B00B14218 /* AddProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductView.swift; sourceTree = "<group>"; };
+		5DE52FC82C00AF8300D0771D /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,6 +239,7 @@
 				5DB62FF62B827D23008778F2 /* CommonServices.swift */,
 				5DC9B6982B62EFC800A29964 /* DatabaseService.swift */,
 				5DB62FF42B815B02008778F2 /* StorageService.swift */,
+				5DE52FC82C00AF8300D0771D /* NetworkMonitor.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -359,6 +362,7 @@
 				5D4E077F2B55847E00C9A8EB /* PirouetteApp.swift in Sources */,
 				5DC9B6782B60440D00A29964 /* AuthService.swift in Sources */,
 				5D317FAC2B6FE6430059318B /* OrderViewModel.swift in Sources */,
+				5DE52FC92C00AF8300D0771D /* NetworkMonitor.swift in Sources */,
 				5D4E07982B5975DC00C9A8EB /* Product.swift in Sources */,
 				5D4E079E2B5A974E00C9A8EB /* CatalogViewModel.swift in Sources */,
 			);
