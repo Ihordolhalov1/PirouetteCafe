@@ -24,7 +24,7 @@ struct CartView: View {
     @State private var clientName = ""
     @State private var clientPhone = ""
 
-    @State private var selectedTime = Date()
+    @State private var timeToGetOrder = Date()
 
     var body: some View {
     //    ScrollView {
@@ -152,24 +152,69 @@ struct CartView: View {
                     
                     let currentDate = Date()
                     let calendar = Calendar.current
+                    let tomorrow = calendar.date(byAdding: .day, value: 1, to: currentDate)!
+
                     let currentDatePlus30Minutes = calendar.date(byAdding: .minute, value: 30, to: currentDate)!
-                    let closingTime = calendar.date(bySettingHour: 20, minute: 0, second: 0, of: currentDate)!
+                    let todayClosingTime = calendar.date(bySettingHour: 22, minute: 30, second: 0, of: currentDate)!
+
+                    let tomorrowStart = calendar.date(bySettingHour: 9, minute: 0, second: 0, of: tomorrow)!
+                    let tomorrowClosingTime = calendar.date(bySettingHour: 22, minute: 30, second: 0, of: tomorrow)!
                     
-                    DatePicker(selection: $selectedTime, in: currentDatePlus30Minutes...closingTime, displayedComponents: .hourAndMinute) {
-                        Text("Please select time")
-                    }
-                    .datePickerStyle(CompactDatePickerStyle())
-                    .padding()
-                    .onAppear {
-                        UIDatePicker.appearance().minuteInterval = 15
+
+                    if (currentDatePlus30Minutes > todayClosingTime) {
+
+                        //показать датапикер с завтрашней датой
+                        DatePicker(selection: $timeToGetOrder, in: tomorrowStart...tomorrowClosingTime, displayedComponents: .hourAndMinute) {
+                            Text("Please select time")
+                        }
+                        .datePickerStyle(CompactDatePickerStyle())
+                        .padding()
+                        .onAppear {
+                            timeToGetOrder = Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: Calendar.current.date(byAdding: .day, value: 1, to: Date())!)!
+
+                            UIDatePicker.appearance().minuteInterval = 15
+                            
+
+                            let minuteInterval = 15
+                            let currentMinute = calendar.component(.minute, from: timeToGetOrder)
+                            print(currentMinute)
+                            let roundedMinute = (currentMinute / minuteInterval) * minuteInterval
+                            print(roundedMinute)
+
+                            let roundedDate = calendar.date(bySetting: .minute, value: roundedMinute, of: timeToGetOrder)!
+                            print(roundedDate)
+
+                            timeToGetOrder = roundedDate
+                            print(timeToGetOrder)
+
+                        }
+                            
+                    } else {
+                        //показать датапикер с текущей датой
                         
-                        let minuteInterval = 15
-                        let currentMinute = calendar.component(.minute, from: selectedTime)
-                        let roundedMinute = (currentMinute / minuteInterval) * minuteInterval
-                        let roundedDate = calendar.date(bySetting: .minute, value: roundedMinute, of: selectedTime)!
-                        selectedTime = roundedDate
+                        DatePicker(selection: $timeToGetOrder, in: currentDatePlus30Minutes...todayClosingTime, displayedComponents: .hourAndMinute) {
+                            Text("Please select time")
+                        }
+                        .datePickerStyle(CompactDatePickerStyle())
+                        .padding()
+                        .onAppear {
+                            timeToGetOrder = currentDatePlus30Minutes
+                            UIDatePicker.appearance().minuteInterval = 15
+                            
+                            let minuteInterval = 15
+                            let currentMinute = calendar.component(.minute, from: timeToGetOrder)
+                            print(currentMinute)
+                            let roundedMinute = (currentMinute / minuteInterval) * minuteInterval
+                            print(roundedMinute)
+
+                            let roundedDate = calendar.date(bySetting: .minute, value: roundedMinute, of: timeToGetOrder)!
+                            print(roundedDate)
+
+                            timeToGetOrder = roundedDate
+                            print(timeToGetOrder)
+
+                        }
                     }
-                    
                     
                     
                     
@@ -212,7 +257,7 @@ struct CartView: View {
                                     
                                     isAlertPresented.toggle()
                                     print("ЗНАЧЕНИЕ isAlertPresented \(isAlertPresented) ")
-                                    var order = Order(userID: AuthService.shared.currentUser!.uid, date: Date(), status: OrderStatus.new.rawValue, address: address, dateToGet: selectedTime)
+                                    var order = Order(userID: AuthService.shared.currentUser!.uid, date: Date(), status: OrderStatus.new.rawValue, address: address, dateToGet: timeToGetOrder)
                                     order.positions = self.viewModel.positions
                                     
                                     
@@ -264,7 +309,7 @@ struct CartView: View {
                     }
                 )
                 .alert(
-                    "Your name ot phone number is undefined, please fill in the Account page",
+                    "Your name or phone number is undefined, please fill in the Account page",
                     isPresented: $isNameOrPhoneEmpty,
                     actions: {
                         Button("Close") {}
